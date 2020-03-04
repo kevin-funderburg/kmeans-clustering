@@ -8,6 +8,29 @@ k = None
 
 
 def main():
+    read_data()
+
+    # pick K points as the initial centroids
+    for n in range(k):
+        centroids.append(DATA_SET[n])
+
+    print('k = ' + str(k))
+
+    # find the distance between the points and the centroids
+    for point in DATA_SET:
+        distances = []
+
+        for index in centroids:
+            distances.append(euclidean_distance(point, index))
+
+        # find which cluster the datapoint belongs to by finding the minimum
+        cluster_index = distances.index(min(distances))
+        print("{0}\t{1}\t{2}".format(point[0], point[1], cluster_index))
+
+    print('done')
+
+
+def read_data():
     global k
     input1 = open('input1.txt', 'r')
 
@@ -25,23 +48,6 @@ def main():
                     y = int(items[n])
 
             DATA_SET.append([x,y])
-
-    # pick K points as the initial centroids
-    for n in range(k):
-        centroids.append(DATA_SET[n])
-
-    # find the distance between the points and the centroids
-    for point in DATA_SET:
-        distances = []
-
-        for index in centroids:
-            distances.append(euclidean_distance(point, index))
-
-        # find which cluster the datapoint belongs to by finding the minimum
-        cluster_index = distances.index(min(distances))
-
-
-    print('done')
 
 
 def euclidean_distance(point1, point2):
