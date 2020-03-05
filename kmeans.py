@@ -7,12 +7,12 @@ MAX_ITERATIONS = 500
 
 
 def main():
+    # build argument parser
     parser = argparse.ArgumentParser()
     parser.add_argument('-k', dest='k_input', nargs='?', default=None)
     parser.add_argument('-i', dest='input_file', nargs='?', default=None)
     args = parser.parse_args()
 
-    # if not args.all:
     if not args.k_input:
         print("k wasn't provided, try again!")
         return 0
@@ -41,12 +41,13 @@ def main():
     centroids = []
 
     DATA_SET = read_data(input)
+    output_file = open(output, "a")
 
     # pick K points as the initial centroids
     for x in range(k):
         centroids.append(DATA_SET[x])
 
-    print('k = ' + str(k))
+    output_file.write('k = ' + str(k) + "\r")
 
     # begin k-mean clustering
     for n in range(MAX_ITERATIONS):
@@ -58,50 +59,53 @@ def main():
         for point in DATA_SET:
             distances = []
 
-            for index in centroids:
-                distances.append(euclidean_distance(point, index))
+            for c in centroids:
+                distances.append(euclidean_distance(point, c))
 
             # find which cluster the datapoint belongs to by finding the minimum
             cluster_index = distances.index(min(distances))
             classes[cluster_index].append(point)
 
             if n == MAX_ITERATIONS-1:
-                out_fname = input.replace("input", "output")
-                output = open("./output/" + out_fname, "a")
-                output.write("{0}\t{1}\t{2}\r".format(point[0], point[1], cluster_index+1))
-                print("{0}\t{1}\t{2}".format(point[0], point[1], cluster_index+1))
+                # write to file
+                output_file.write("{0}\t{1}\t{2}\r".format(point[0], point[1], cluster_index+1))
 
-        # now that we have classified the datapoints into clusters, we need to again
         # find new centroid by taking the centroid of the points in the cluster class
         for cluster_index in classes:
             centroids[cluster_index] = np.average(classes[cluster_index], axis=0)
 
+    print("output written to '" + output + "' successfully")
+    output_file.close()
+
 
 def read_data(fname):
-    k = None
+    """
+    read data from input file
+    :param fname: name of input file
+    :return: array of data points
+    """
     dataset = []
 
     input = open('./data/' + fname, 'r')
 
-    # get the data from the input file
     for line in input:
         line = line.strip()
-        if "k=" in line:
-            k = int(line.split("=")[1])
-        else:
-            items = line.split("\t")
-            for n in range(len(items)):
-                if n == 0:
-                    x = int(items[n])
-                else:
-                    y = int(items[n])
+        items = line.split("\t")
+        for n in range(len(items)):
+            if n == 0:
+                x = int(items[n])
+            else:
+                y = int(items[n])
 
-            dataset.append([x,y])
+        dataset.append([x,y])
 
     return dataset
 
 
 def euclidean_distance(point1, point2):
+    """
+    calculate euclidean distance between two points
+    """
     return math.sqrt((point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2)
 
 
