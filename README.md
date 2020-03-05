@@ -27,7 +27,8 @@ This project will explore the data mining concept of clustering by implementatio
 
         python3 kmeans.py -k [int] -i [input file name]
 
-- On linux:
+
+  - On linux:
 
         python kmeans.py -k [int] -i [input file name]
 
