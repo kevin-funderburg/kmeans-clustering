@@ -2,7 +2,9 @@ import os
 import re
 import math
 
-centroids = []
+centroids = {}
+classes1 = []
+classes2 = []
 DATA_SET = []
 k = None
 
@@ -25,6 +27,11 @@ def main():
 
         # find which cluster the datapoint belongs to by finding the minimum
         cluster_index = distances.index(min(distances))
+        if cluster_index == 0:
+            classes1.append(point)
+        else:
+            classes2.append(point)
+        # classes[cluster_index].append(point)
         print("{0}\t{1}\t{2}".format(point[0], point[1], cluster_index))
 
     print('done')
