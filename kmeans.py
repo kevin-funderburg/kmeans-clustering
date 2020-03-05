@@ -2,9 +2,7 @@ import os
 import re
 import math
 
-centroids = {}
-classes1 = []
-classes2 = []
+centroids = []
 DATA_SET = []
 k = None
 
@@ -15,6 +13,11 @@ def main():
     # pick K points as the initial centroids
     for n in range(k):
         centroids.append(DATA_SET[n])
+
+
+    classes = {}
+    for i in range(k):
+        classes[i] = []
 
     print('k = ' + str(k))
 
@@ -27,11 +30,8 @@ def main():
 
         # find which cluster the datapoint belongs to by finding the minimum
         cluster_index = distances.index(min(distances))
-        if cluster_index == 0:
-            classes1.append(point)
-        else:
-            classes2.append(point)
-        # classes[cluster_index].append(point)
+        classes[cluster_index].append(point)
+
         print("{0}\t{1}\t{2}".format(point[0], point[1], cluster_index))
 
     print('done')
