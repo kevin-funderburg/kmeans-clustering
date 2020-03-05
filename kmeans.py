@@ -47,7 +47,7 @@ def main():
     for x in range(k):
         centroids.append(DATA_SET[x])
 
-    output_file.write('k = ' + str(k) + "\r")
+    output_file.write('k = ' + str(k) + "\n")
 
     # begin k-mean clustering
     for n in range(MAX_ITERATIONS):
@@ -68,7 +68,7 @@ def main():
 
             if n == MAX_ITERATIONS-1:
                 # write to file
-                output_file.write("{0}\t{1}\t{2}\r".format(point[0], point[1], cluster_index+1))
+                output_file.write("{0}\t{1}\t{2}\n".format(point[0], point[1], cluster_index+1))
 
         # find new centroid by taking the centroid of the points in the cluster class
         for cluster_index in classes:

@@ -1,4 +1,4 @@
-# TCP Client/Server Project
+# K-means algorithm
 
 Author: Kevin Funderburg
 
@@ -7,7 +7,6 @@ Author: Kevin Funderburg
 
 - [About](#about)
 - [Usage](#usage)
-    - [Make commands](#make-commands)
     - [Command line structure:](#command-line-structure)
     - [Examples](#examples)
 - [Licensing & Thanks](#licensing--thanks)
@@ -24,15 +23,19 @@ This project will explore the data mining concept of clustering by implementatio
 
 
 ### Command line structure:
+- On macOS:
 
-```
-kmeans k input.txt
+        python3 kmeans.py -k [int] -i [input file name]
 
-```
+- On linux:
+        python kmeans.py -k [int] -i [input file name]
+
 
 ### Examples
 ```shell
-
+python kmeans.py -k 2 -i "input1.txt"
+python kmeans.py -k 4 -i "input4.txt"
+python kmeans.py -k 3 -i "input3.txt"
 ```
 
 
